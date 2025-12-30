@@ -5,8 +5,10 @@ let port = 8081
 
 app.use(express.json())
 
-const routerPermissions = require("./routers/routerPermissions")
+let routerPermissions = require("./routers/routerPermissions")
 app.use("/permissions", routerPermissions)
+let routerUsers = require("./routers/routerUsers")
+app.use("/users", routerUsers)
 
 app.listen(port, () => {
     console.log("Servidor activo en " + port)

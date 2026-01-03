@@ -1,4 +1,5 @@
 const express = require("express")
+let jwt = require("jsonwebtoken")
 
 let app = express()
 let port = 8081
@@ -7,6 +8,22 @@ app.use(express.json())
 
 app.use(["/permissions"], (req,res,next) => {
     console.log("middleware execution")
+
+    let apikey = req.query.apikey
+    if(apikey == undefined){
+        res.status(401).json({error: "apikey required"})
+        return
+    }
+
+    let infoApiKey = null
+    try{
+        infoApiKey = jwt.verify(apikey, "secret")
+    } catch(error){
+        res.status(401).json({error: "invalid token"})
+        return
+    }
+    req.infoApiKey = infoApiKey
+
     next()
 })
 

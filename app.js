@@ -6,6 +6,10 @@ let port = 8081
 
 app.use(express.json())
 
+//recurso public lo primero
+app.use(express.static("public"))
+
+//middleware
 app.use(["/permissions"], (req,res,next) => {
     console.log("middleware execution")
 
